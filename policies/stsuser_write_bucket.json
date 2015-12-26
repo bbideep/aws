@@ -1,12 +1,40 @@
 {
-  "Version":"2012-10-17",
-  "Statement":[
-    {
-      "Sid":"stsuser_write_bucket",
-      "Effect":"Deny",
-      "NotPrincipal": "*",
-      "Action":["s3:GetObject"],
-      "Resource":["arn:aws:s3:::bucketname/*"]
-    }
-  ]
+	"Version": "2012-10-17",
+	"Statement": [{
+		"Sid": "find_bucket",
+		"Effect": "Allow",
+		"Principal": "*",
+		"Action": [
+			"s3:ListBucket",
+			"s3:GetBucketLocation"
+		],
+		"Resource": "arn:aws:s3:::bucketname"
+	}, {
+		"Sid": "user_write_bucket_access",
+		"Effect": "Deny",
+		"NotPrincipal": {
+			"AWS": [
+				"arn:aws:iam:123456789012:role/LeadUser_Role",
+				"arn:aws:sts:123456789012:assumed-role/LeadUser_Role/USER1",
+				"arn:aws:sts:123456789012:assumed-role/LeadUser_Role/USER2",
+				"arn:aws:iam:123456789012:user/App_SysUser"
+			]
+		},
+		"Action": ["s3:DeleteObject", "s3:PutObject"],
+		"Resource": "arn:aws:s3:::bucketname/*"
+	}, {
+		"Sid": "vpce_access_only",
+		"Effect": "Allow",
+		"Principal": "*",
+		"Action": "s3:GetBucket",
+		"Resource": "arn:aws:s3:::bucketname/*",
+		"Condition": {
+			"StringEquals": {
+				"aws:sourceVpce": [
+					"vpce-1234abcd",
+					"vpce-efgh5678"
+				]
+			}
+		}
+	}]
 }
