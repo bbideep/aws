@@ -14,8 +14,8 @@
 		"Effect": "Deny",
 		"NotPrincipal": {
 			"AWS": [
-				"arn:aws:iam:237607500904:role/s3IAMRole",
-				"arn:aws:iam::237607500904:user/BideepB.1"
+				"arn:aws:iam::237607500904:role/s3IAMRole",
+				"arn:aws:iam::237607500904:user/BideepB.3"
 			]
 		},
 		"Action": ["s3:DeleteObject", "s3:PutObject"],
