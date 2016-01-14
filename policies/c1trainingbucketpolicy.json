@@ -15,7 +15,8 @@
 		"NotPrincipal": {
 			"AWS": [
 				"arn:aws:iam::237607500904:role/s3IAMRole",
-				"arn:aws:iam::237607500904:user/BideepB.3"
+				"arn:aws:iam::237607500904:user/BideepB.3",
+				"arn:aws:iam::237607500904:user/BideepB.1"
 			]
 		},
 		"Action": ["s3:DeleteObject", "s3:PutObject"],
@@ -24,12 +25,12 @@
 		"Sid": "vpce_access_only",
 		"Effect": "Allow",
 		"Principal": "*",
-		"Action": "s3:GetBucket",
+		"Action": "s3:GetObject",
 		"Resource": "arn:aws:s3:::c1trainingbucket/*",
 		"Condition": {
 			"StringEquals": {
 				"aws:IPAddress": [
-					"192.168.0.7"
+					"192.168.0.*"
 				]
 			}
 		}
