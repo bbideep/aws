@@ -27,10 +27,8 @@
 		"Action": "s3:GetObject",
 		"Resource": "arn:aws:s3:::c1trainingbucket/*",
 		"Condition": {
-			"StringEquals": {
-				"aws:IPAddress": [
-					"192.168.0.*"
-				]
+			"IpAddress": {
+				"aws:SourceIp" : "54.175.8.252"
 			}
 		}
 	}]
