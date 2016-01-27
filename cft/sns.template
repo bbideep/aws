@@ -1,0 +1,77 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Create an SNS Topic",
+    "Parameters":
+    {
+        "env":
+        {
+            "Description": "Environment",
+            "Type": "String",
+            "Default": "dev",
+            "AllowedValues": [
+                "test",
+                "dev"
+            ]
+        },
+        "appname":
+        {
+            "Description": "Application Name",
+            "Type": "String",
+            "Default": "demoapp"
+        },
+        "AlertNotifyEmail":
+        {
+            "Description": "Email address to notify if there are any alarm conditions",
+            "Type": "String",
+            "Default": "bbideep@gmail.com"
+        }
+    },
+    "Resources":
+    {
+        "AlertNotificationTopic":
+        {
+            "Type": "AWS::SNS::Topic",
+            "Properties":
+            {
+                "Subscription": [
+                    {
+                        "Endpoint":
+                        {
+                            "Ref": "AlertNotifyEmail"
+                        },
+                        "Protocol": "email"
+                    }],
+                "TopicName":
+                {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            {
+                                "Ref": "appname"
+                            },
+                            {
+                                "Ref": "env"
+                            },
+                            "Topic"
+                        ]
+                    ]
+                },
+                "DisplayName":
+                {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            {
+                                "Ref": "appname"
+                            },
+                            {
+                                "Ref": "env"
+                            },
+                            "Topic"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}
